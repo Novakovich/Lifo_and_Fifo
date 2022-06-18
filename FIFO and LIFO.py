@@ -1,39 +1,30 @@
+import json
+def get_goods(file_name):
+    with open(file_name, 'r', encoding='utf-8') as f_json:
+        some_goods = json.load(f_json)
+        return some_goods
 STRATEGY = input('LIFO/FIFO')
+file = 'd:/LifoAndFifo/data.json'
+person_have = input('что у вас?')
 
-while len(STRATEGY) >= 0:
-    if STRATEGY == ('FIFO'):
-        person_have = input('что у вас?')
-        goods = []
-        while len(goods) >= 0:
-            if not person_have:
-                if not len(goods):
-                   print('Приходите завтра')
-                   break
-                else:
-                   item = goods.pop()
-                   print('Возьмите, вот вам', item) 
-            else:
-                goods.insert(0, person_have)
-                print('Спасибо')
-            person_have = input('что у вас?')
-        STRATEGY = input('LIFO/FIFO')
-
-    elif STRATEGY == ('LIFO'):
-        person_have = input('что у вас?')
-        goods = []
-        while len(goods) >= 0:
-            if not person_have:
-                if not len(goods):
-                   print('Приходите завтра')
-                   break
-                else:
-                   item = goods.pop()
-                   print('Возьмите, вот вам', item) 
-            else:
-                goods.append(person_have)
-                print('Спасибо')
-            person_have = input('что у вас?')
-        STRATEGY = input('LIFO/FIFO')
-    
-    else:
-        STRATEGY = input('LIFO/FIFO')
+while True:
+    if person_have == 'exit':
+        break
+    if not person_have:
+        goods = get_goods(file)
+        if STRATEGY == ('FIFO'):
+            item = goods.pop(0)
+        elif STRATEGY == ('LIFO'):
+            item = goods.pop()
+        print('Возьмите, вот вам ' + item['name'] + ' ' + str(item['amount']) + ' шт')
+        with open(file, 'w', encoding='utf-8') as f:
+            json.dump(goods, f)
+    if person_have:
+        amount = input('сколько?')
+        entry = {"name": person_have, "amount": int(amount)}
+        goods = get_goods(file)
+        goods.append(entry)
+        with open(file, 'w', encoding='utf-8') as f:
+            json.dump(goods, f)
+            print('Спасибо')
+    person_have = input('что у вас?')
