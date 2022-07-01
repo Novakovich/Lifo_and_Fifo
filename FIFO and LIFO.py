@@ -1,4 +1,5 @@
 import json
+
 def get_goods(file_name):
     with open(file_name, 'r', encoding='utf-8') as f_json:
         some_goods = json.load(f_json)
