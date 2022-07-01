@@ -17,13 +17,12 @@ def donation():
     with open ('data.json', 'r', encoding='utf-8') as data:
         data_list = json.load(data)
         item = data_list.pop()
-    return f" here {item['name']} {item['amount']} "
-
-@app.route('/request/donation')
-def page():
-    return f"""<html>
+    return f""" here {item['name']} {item['amount']} 
+    <html>
         <body>
-            <a href="{url_for('index')}">Return main</a>
+            <p>
+            <a href="/">Return main</a>
+            </p>
         </body>
     </html>"""
 
