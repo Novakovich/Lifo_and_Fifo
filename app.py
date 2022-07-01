@@ -8,12 +8,12 @@ app.debug = True
 def home_page():
     return render_template('index.html')
 
-@app.route('/donate', methods=["POST", "GET"])
+@app.route('/donate', methods=['POST'])
 def donate():
-    with open ('data.json', 'r', encoding='utf-8') as data:
+    with open('data.json', 'r', encoding='utf-8') as data:
         data_list = json.load(data)
         data_list.append(
-            {"name": request.form["Donatation"], "amount": request.form["Amount"]}
+            {"name": request.form["name"], "amount": request.form["amount"]}
         )
     with open('data.json', 'w') as data:
         json.dump(data_list, data)
@@ -28,7 +28,7 @@ def donate():
 
 @app.route('/request/donation')
 def donation():
-    with open ('data.json', 'r', encoding='utf-8') as data:
+    with open('data.json', 'r', encoding='utf-8') as data:
         data_list = json.load(data)
     if not data_list:
         return f""" here nothing for you 
