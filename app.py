@@ -31,10 +31,7 @@ def donation():
     item = data_list.pop()
     with open('data.json', 'w') as data:
         json.dump(data_list, data)
-    return f""" 
-    {render_template('donation.html')}
-    here {item['name']} {item['amount']} 
-    """
+    return render_template('donation.html', item=item )
 
 if __name__ == '__main__':
     app.run(debug=True)
